@@ -7,39 +7,58 @@
     <groupId>learning</groupId>
     <artifactId>vertx</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+    <developers>
+        <developer>
+            <name>
+                Eduard Dubilyer
+            </name>
+        </developer>
+    </developers>
+    <properties>
+        <vertx.version>3.7.0</vertx.version>
+    </properties>
     <dependencies>
+        <!--Jedis-->
         <dependency>
-            <groupId>io.vertx</groupId>
-            <artifactId>vertx-core</artifactId>
-            <version>3.7.0</version>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>3.0.1</version>
+            <scope>test</scope>
         </dependency>
+        <!--JUnit -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.4.2</version>
             <scope>test</scope>
         </dependency>
+        <!-- VERT.X -->
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-core</artifactId>
+            <version>${vertx.version}</version>
+        </dependency>
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-junit5</artifactId>
-            <version>3.7.0</version>
+            <version>${vertx.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-web-client</artifactId>
-            <version>3.7.0</version>
+            <version>${vertx.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-redis-client</artifactId>
-            <version>3.7.0</version>
+            <version>${vertx.version}</version>
         </dependency>
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-web</artifactId>
-            <version>3.7.0</version>
+            <version>${vertx.version}</version>
         </dependency>
     </dependencies>
 

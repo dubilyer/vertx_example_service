@@ -1,32 +1,29 @@
 package controller;
 
-import dao.DAO;
-import dao.UserRedisRepository;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.eventbus.Message;
-import io.vertx.core.json.Json;
-import model.User;
+import service.UserServ;
 
 public class PersistanceVerticle extends AbstractVerticle {
-    DAO repo;
+   UserServ service;
 
     @Override
-    public void start() throws Exception {
-        repo = new UserRedisRepository(vertx);
+    public void start() {
+        service = new UserServ(vertx);
         final EventBus eventBus = vertx.eventBus();
         eventBus.consumer("DB", receivedMessage -> {
             System.out.println("Received: " + receivedMessage.body());
             switch (receivedMessage.body().toString().split("#")[0]) {
                 case "Get User":
-                    getUser(receivedMessage);
+                    service.getUser(receivedMessage, future -> handle(future, receivedMessage));
                     break;
                 case "Add User":
-                    addUser(receivedMessage);
+                    service.addUser(receivedMessage, future -> handle(future, receivedMessage));
                     break;
                 case "Delete User":
-                    deleteUser(receivedMessage);
+                    service.deleteUser(receivedMessage, future -> handle(future, receivedMessage));
                     break;
                 default:
                     receivedMessage.reply("Unknown message: " + receivedMessage.body());
@@ -34,22 +31,7 @@ public class PersistanceVerticle extends AbstractVerticle {
         });
     }
 
-    private void deleteUser(Message message) {
-        String id = message.body().toString().split("#")[1];
-        repo.deleteUser(id, future -> handle(future, message));
-    }
-
-    private void addUser(Message message) {
-        User user = Json.decodeValue(message.body().toString().split("#")[1], User.class);
-        repo.addUser(user, future -> handle(future, message));
-    }
-
-    void getUser(Message message) {
-        repo.getUserById(
-                future -> handle(future, message));
-    }
-
-    <T> void handle(AsyncResult<T> future, Message message) {
+    <T> void handle(AsyncResult<T> future, Message message){
         System.out.println(future.succeeded());
         if (future.succeeded()) {
             message.reply(future.result());

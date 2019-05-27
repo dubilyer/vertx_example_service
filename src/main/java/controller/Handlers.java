@@ -12,7 +12,8 @@ class Handlers {
     }
 
     void getUser(RoutingContext routingContext){
-        vertx.eventBus().send("DB", "Get User#", reply -> {
+        String id = routingContext.request().getParam("id");
+        vertx.eventBus().send("DB", "Get User#" + id, reply -> {
             if (reply.succeeded()) {
                 System.out.println("Received reply: " + reply.result().body());
                 routingContext.response().end(Json.encode(reply.result().body()));

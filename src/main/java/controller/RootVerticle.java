@@ -21,7 +21,7 @@ public class RootVerticle extends AbstractVerticle {
     private Router registerRoutes() {
         Router router = Router.router(vertx);
         router.route().handler(BodyHandler.create());
-        router.get("/user").handler(handlers::getUser);
+        router.get("/user/:id").handler(handlers::getUser);
         router.post("/user").handler(handlers::addUser);
         router.delete("/user/:id").handler(handlers::deleteUser);
         return router;

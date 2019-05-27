@@ -21,17 +21,17 @@ public class UserRedisRepository implements DAO{
     }
 
     private void populate() {
-        client.hset(REDIS_USER_KEY, "25", Json.encode(
-                new User(1, "Admin")), res -> {
-            if (res.failed()) {
-                res.cause().printStackTrace();
-            }
-        });
+//        client.hset(REDIS_USER_KEY, "25", Json.encode(
+//                new User(1, "Admin")), res -> {
+//            if (res.failed()) {
+//                res.cause().printStackTrace();
+//            }
+//        });
     }
 
     @Override
-    public RedisClient getUserById(Handler<AsyncResult<String>> handler) {
-       return client.hget(REDIS_USER_KEY, "25", handler);
+    public RedisClient getUserById(String id, Handler<AsyncResult<String>> handler) {
+       return client.hget(REDIS_USER_KEY, id, handler);
     }
 
     @Override

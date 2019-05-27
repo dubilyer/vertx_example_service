@@ -8,20 +8,22 @@ import io.vertx.junit5.VertxTestContext;
 import model.User;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import service.UserServ;
+import redis.clients.jedis.Jedis;
 
 import java.util.Random;
 
 @ExtendWith(VertxExtension.class)
-class VertxTest {
+class IntegrationPersistenceTests {
 
     private static Vertx vertx;
     private static WebClient client;
+    private static Jedis jedis;
 
     @BeforeAll
     static void deploy_verticle(VertxTestContext context) {
         vertx = Vertx.vertx();
         client = WebClient.create(vertx);
+        jedis = new Jedis("192.168.99.100", 6379);
         RootVerticle.deployAll();
         context.completeNow();
     }
@@ -32,30 +34,14 @@ class VertxTest {
         vertx.close();
     }
 
-    @BeforeEach @AfterEach
-    void display(){
-        UserServ.INSTANCE.logDisplay();
-    }
-
-    @RepeatedTest(3)
-    @Disabled
-    void testMyApplication(VertxTestContext context) {
-        client.get(8080, "localhost", "/")
-                .as(BodyCodec.string())
-                .send(context.succeeding(response -> context.verify(() -> {
-                    Assertions.assertEquals(200, response.statusCode());
-                    Assertions.assertTrue(response.body().contains("Test"));
-                    context.completeNow();
-                })));
-    }
-
     @Test
     void testGetUser(VertxTestContext context) {
-        client.get(8080, "localhost", "/user")
+        User user = createRundomUser();
+        client.get(8080, "localhost", "/user/" + user.getId())
                 .as(BodyCodec.string())
                 .send(context.succeeding(response -> context.verify(() -> {
                     Assertions.assertEquals(200, response.statusCode());
-                    Assertions.assertEquals(Json.decodeValue(jsonTrim(response.body()), User.class), UserServ.INSTANCE.getUser());
+                    Assertions.assertEquals(Json.decodeValue(jsonTrim(response.body()), User.class), user);
                     context.completeNow();
                 })));
     }
@@ -79,8 +65,6 @@ class VertxTest {
     @Test
     void DeleteUser(VertxTestContext context) {
         User user = createRundomUser();
-        UserServ.INSTANCE.addUser(user);
-        UserServ.INSTANCE.logDisplay();
         client.delete(8080, "localhost", "/user/" + user.getId())
                 .as(BodyCodec.string())
                 .send(
@@ -95,6 +79,8 @@ class VertxTest {
 
     private User createRundomUser() {
         int id = new Random().nextInt();
-        return new User(id, "User" + id);
+        User user = new User(id, "User" + id);
+        jedis.hset("User", String.valueOf(id), Json.encode(user));
+        return user;
     }
 }

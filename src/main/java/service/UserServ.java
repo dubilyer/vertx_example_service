@@ -1,26 +1,38 @@
 package service;
 
-import dao.UserRepository;
+import dao.UserRedisRepository;
+import io.vertx.core.AsyncResult;
+import io.vertx.core.Handler;
+import io.vertx.core.Vertx;
+import io.vertx.core.eventbus.Message;
+import io.vertx.core.json.Json;
 import model.User;
 
-public enum UserServ {
-    INSTANCE;
+public class UserServ {
+    Vertx vertx;
+    UserRedisRepository repo;
 
-    UserRepository repo = UserRepository.INSTANCE;
-
-    public User getUser(){
-        return repo.getUserById(1);
+    public UserServ(Vertx vertx) {
+        this.vertx = vertx;
+        repo = new UserRedisRepository(vertx);
     }
 
-    public void addUser(User user){
-        repo.addUser(user);
+
+    public void deleteUser(Message message, Handler<AsyncResult<Long>> future) {
+        String id = message.body().toString().split("#")[1];
+        repo.deleteUser(id, future);
     }
 
-    public void deleteUser(int id){
-        repo.deleteUser(id);
+    public void addUser(Message message, Handler<AsyncResult<Long>> future) {
+        User user = Json.decodeValue(getBody(message), User.class);
+        repo.addUser(user, future);
     }
 
-    public void logDisplay(){
-        System.out.println(repo.toString());
+    private String getBody(Message message) {
+        return message.body().toString().split("#")[1];
+    }
+
+    public void getUser(Message message, Handler<AsyncResult<String>> future) {
+        repo.getUserById(getBody(message), future);
     }
 }
