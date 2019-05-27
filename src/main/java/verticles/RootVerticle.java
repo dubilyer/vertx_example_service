@@ -1,19 +1,20 @@
-package controller;
+package verticles;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
-import io.vertx.core.Vertx;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
 
 
 public class RootVerticle extends AbstractVerticle {
-    static Handlers handlers;
-    static EventBus eventBus;
+    private static Handlers handlers;
+    private static EventBus eventBus;
 
     @Override
     public void start(Future<Void> startFuture) {
+        eventBus = vertx.eventBus();
+        handlers = new Handlers(vertx);
         Router router = registerRoutes();
         startServer(startFuture, router);
     }
@@ -45,17 +46,5 @@ public class RootVerticle extends AbstractVerticle {
                         startFuture.fail(result.cause());
                     }
                 });
-    }
-
-    public static void main(String[] args) {
-        deployAll();
-    }
-
-    public static void deployAll() {
-        Vertx vertx = Vertx.vertx();
-        eventBus = vertx.eventBus();
-        handlers = new Handlers(vertx);
-        vertx.deployVerticle(new RootVerticle());
-        vertx.deployVerticle(new PersistanceVerticle());
     }
 }

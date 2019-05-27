@@ -1,11 +1,11 @@
-package controller;
+package verticles;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.json.Json;
 import io.vertx.ext.web.RoutingContext;
 
 class Handlers {
-    Vertx vertx;
+    private Vertx vertx;
 
     Handlers(Vertx vertx) {
         this.vertx = vertx;

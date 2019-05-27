@@ -1,4 +1,4 @@
-package controller;
+package verticles;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
@@ -7,7 +7,7 @@ import io.vertx.core.eventbus.Message;
 import service.UserServ;
 
 public class PersistanceVerticle extends AbstractVerticle {
-   UserServ service;
+   private UserServ service;
 
     @Override
     public void start() {

@@ -1,4 +1,5 @@
-import controller.RootVerticle;
+import controllers.RootController;
+import verticles.RootVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.Json;
 import io.vertx.ext.web.client.WebClient;
@@ -24,7 +25,7 @@ class IntegrationPersistenceTests {
         vertx = Vertx.vertx();
         client = WebClient.create(vertx);
         jedis = new Jedis("192.168.99.100", 6379);
-        RootVerticle.deployAll();
+        RootController.deployAll();
         context.completeNow();
     }
 
