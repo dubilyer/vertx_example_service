@@ -10,6 +10,9 @@ import model.User;
 
 import java.util.Optional;
 
+/**
+ * Redis realization of DAO
+ */
 public class UserRedisRepository implements DAO {
     private RedisClient client;
     private static final String REDIS_USER_KEY = "User";

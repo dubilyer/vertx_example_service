@@ -8,6 +8,9 @@ import io.vertx.core.eventbus.Message;
 import io.vertx.core.json.Json;
 import model.User;
 
+/**
+ * Service layer. Created to separate repository from controller.
+ */
 public class UserService {
     private UserRedisRepository repo;
 

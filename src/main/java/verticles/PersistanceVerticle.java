@@ -6,8 +6,12 @@ import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.eventbus.Message;
 import service.UserService;
 
+/**
+ * Persistence verticle. Listens the event bus at address "DB"
+ * and calls the appropriate handler for each message type.
+ */
 public class PersistanceVerticle extends AbstractVerticle {
-   private UserService service;
+    private UserService service;
 
     @Override
     public void start() {
@@ -31,7 +35,14 @@ public class PersistanceVerticle extends AbstractVerticle {
         });
     }
 
-    private <T> void handle(AsyncResult<T> future, Message message){
+    /**
+     * Generic persistence handler
+     *
+     * @param future  - future object for handler result
+     * @param message - received message
+     * @param <T>     - result type
+     */
+    private <T> void handle(AsyncResult<T> future, Message message) {
         System.out.println(future.succeeded());
         if (future.succeeded()) {
             message.reply(future.result());

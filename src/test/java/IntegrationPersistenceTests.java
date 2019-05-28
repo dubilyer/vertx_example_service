@@ -15,15 +15,30 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import redis.clients.jedis.Jedis;
 
+/**
+ * <h2>Integration tests.</h2>
+ * Each test sends a proper rest request
+ * and validates response.
+ * <p>
+ * Test container with redis is deployed by {@link Testcontainers}
+ * User creation not related to test is made directly via {@link Jedis} client.
+ */
 @ExtendWith(VertxExtension.class)
 @Testcontainers
-class IntegrationPersistenceTests extends BaseTest{
+class IntegrationPersistenceTests extends BaseTest {
     private static Jedis jedis;
 
+    /**
+     * Running docker container with Redis
+     */
     @Container
     private static GenericContainer redis = new GenericContainer("redis:latest")
             .withExposedPorts(6379);
 
+    /**
+     * Deploys all verticles, initializes clients
+     * @param context {@link VertxTestContext}
+     */
     @BeforeAll
     static void deploy_verticle(VertxTestContext context) {
         System.setProperty("testRedisPost", String.valueOf(redis.getMappedPort(6379)));
@@ -46,8 +61,13 @@ class IntegrationPersistenceTests extends BaseTest{
                 })));
     }
 
+    /**
+     * Trimmer helper
+     * @param body - String param
+     * @return trimmed string without escape characters
+     */
     private String jsonTrim(String body) {
-        return body.substring(1,body.length()-1).replace("\\","");
+        return body.substring(1, body.length() - 1).replace("\\", "");
     }
 
     @Test
@@ -77,6 +97,11 @@ class IntegrationPersistenceTests extends BaseTest{
                 );
     }
 
+    /**
+     * Stores created user to db after creating.
+     *
+     * @return {@link User}
+     */
     @Override
     User createRandomUser() {
         User user = super.createRandomUser();

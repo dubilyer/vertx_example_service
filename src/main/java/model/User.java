@@ -2,6 +2,9 @@ package model;
 
 import java.util.Objects;
 
+/**
+ * User model
+ */
 public class User {
     private int id;
     private String name;

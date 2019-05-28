@@ -6,10 +6,17 @@ import org.junit.jupiter.api.AfterAll;
 
 import java.util.Random;
 
+/**
+ * Base test class
+ */
 class BaseTest {
     static Vertx vertx;
     static WebClient client;
 
+    /**
+     * Random user generator
+     * @return {@link User}
+     */
     User createRandomUser() {
         int id = new Random().nextInt();
         return new User(id, "User" + id);

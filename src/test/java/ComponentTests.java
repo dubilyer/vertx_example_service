@@ -15,10 +15,20 @@ import verticles.RestVerticle;
 
 import java.util.Random;
 
+/**
+ * <h2>Component tests.</h2>
+ * Each test sends a proper rest request and
+ * then validates the message sent to the event bus.
+ */
 @ExtendWith(VertxExtension.class)
 class ComponentTests extends BaseTest{
     private static Message[] receivedMessage;
 
+    /**
+     * Deploys only rest verticle and listens for "DB" address
+     * instead of {@link verticles.PersistanceVerticle}
+     * @param context - {@link VertxTestContext}
+     */
     @BeforeAll
     static void deploy_verticle(VertxTestContext context) {
         vertx = Vertx.vertx();

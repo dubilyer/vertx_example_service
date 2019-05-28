@@ -6,7 +6,9 @@ import io.vertx.core.eventbus.EventBus;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
 
-
+/**
+ * Rest api interface
+ */
 public class RestVerticle extends AbstractVerticle {
     private static Handlers handlers;
     private static EventBus eventBus;
@@ -19,6 +21,12 @@ public class RestVerticle extends AbstractVerticle {
         startServer(startFuture, router);
     }
 
+    /**
+     * Is use to expose api endpoints and set up
+     * handler for each one.
+     *
+     * @return {@link Router}
+     */
     private Router registerRoutes() {
         Router router = Router.router(vertx);
         router.route().handler(BodyHandler.create());
@@ -28,6 +36,12 @@ public class RestVerticle extends AbstractVerticle {
         return router;
     }
 
+    /**
+     * Starts Rest service
+     *
+     * @param startFuture - future object for server creation status
+     * @param router      - router for api requests
+     */
     private void startServer(Future<Void> startFuture, Router router) {
         eventBus.send("CONS", "Starting", reply -> {
             if (reply.succeeded()) {
