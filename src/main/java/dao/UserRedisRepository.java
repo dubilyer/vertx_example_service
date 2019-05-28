@@ -20,7 +20,7 @@ public class UserRedisRepository implements DAO{
                         .setHost("192.168.99.100")
                         .setPort(Integer.valueOf(Optional
                                 .ofNullable(
-                                        System.getProperty("Redis_Port")).orElse("6379"))));
+                                        System.getProperty("redisPort")).orElse("6379"))));
     }
 
     @Override

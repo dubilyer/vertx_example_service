@@ -26,7 +26,7 @@ class IntegrationPersistenceTests extends BaseTest{
 
     @BeforeAll
     static void deploy_verticle(VertxTestContext context) {
-        System.setProperty("Redis_Port", String.valueOf(redis.getMappedPort(6379)));
+        System.setProperty("redisPort", String.valueOf(redis.getMappedPort(6379)));
         vertx = Vertx.vertx();
         client = WebClient.create(vertx);
         jedis = new Jedis("192.168.99.100", redis.getMappedPort(6379));
