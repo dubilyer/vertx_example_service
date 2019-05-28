@@ -10,22 +10,26 @@ import model.User;
 
 import java.util.Optional;
 
-public class UserRedisRepository implements DAO{
+public class UserRedisRepository implements DAO {
     private RedisClient client;
     private static final String REDIS_USER_KEY = "User";
 
     public UserRedisRepository(Vertx vertx) {
-        client = RedisClient.create(vertx,
-                new RedisOptions()
-                        .setHost("192.168.99.100")
-                        .setPort(Integer.valueOf(Optional
-                                .ofNullable(
-                                        System.getProperty("redisPort")).orElse("6379"))));
+        System.out.println(System.getProperty("testRedisPort"));
+        RedisOptions options = new RedisOptions()
+                .setHost("192.168.99.100")
+                .setPort(Integer.valueOf(
+                        Optional.ofNullable(System.getProperty("testRedisPost"))
+                                .orElse(Optional.ofNullable(System.getProperty("redisPort"))
+                                        .orElse("6379"))));
+
+        client = RedisClient.create(vertx, options);
+
     }
 
     @Override
     public void getUserById(String id, Handler<AsyncResult<String>> handler) {
-       client.hget(REDIS_USER_KEY, id, handler);
+        client.hget(REDIS_USER_KEY, id, handler);
     }
 
     @Override

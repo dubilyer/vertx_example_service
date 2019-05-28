@@ -7,7 +7,7 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
 
 
-public class RootVerticle extends AbstractVerticle {
+public class RestVerticle extends AbstractVerticle {
     private static Handlers handlers;
     private static EventBus eventBus;
 

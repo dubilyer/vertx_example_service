@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import verticles.RootVerticle;
+import verticles.RestVerticle;
 
 import java.util.Random;
 
@@ -23,7 +23,7 @@ class ComponentTests extends BaseTest{
     static void deploy_verticle(VertxTestContext context) {
         vertx = Vertx.vertx();
         client = WebClient.create(vertx);
-        vertx.deployVerticle(new RootVerticle());
+        vertx.deployVerticle(new RestVerticle());
         EventBus eventBus = vertx.eventBus();
         receivedMessage = new Message[1];
         eventBus.consumer("DB",

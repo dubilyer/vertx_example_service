@@ -2,7 +2,7 @@ package controllers;
 
 import io.vertx.core.Vertx;
 import verticles.PersistanceVerticle;
-import verticles.RootVerticle;
+import verticles.RestVerticle;
 
 public class RootController {
     public static void main(String[] args) {
@@ -11,7 +11,7 @@ public class RootController {
 
     public static void deployAll() {
         Vertx vertx = Vertx.vertx();
-        vertx.deployVerticle(new RootVerticle());
+        vertx.deployVerticle(new RestVerticle());
         vertx.deployVerticle(new PersistanceVerticle());
     }
 }
