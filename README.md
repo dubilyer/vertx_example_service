@@ -14,7 +14,7 @@ To run the server use:
     
 To run tests you can use:
 
-     mvn test
+    mvn test
 
     You don't need redis for it. Tests raise on own container wen needed.
 
