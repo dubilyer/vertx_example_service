@@ -6,7 +6,7 @@ To run the server use:
 
     Start your redis db.
     
-    To do it with the help of docker image, you can run __"redis_start.sh"__
+    To do it with the help of docker image, you can run `redis_start.sh`
     
     mvn clean install exec:java -DredisHost={your redis host}
     
