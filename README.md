@@ -1,6 +1,6 @@
 # vertx_example_service
 
-<h1>Simple vertx service. Can be used as sandbox for a testing tools investigations.</h1>
+<h2>Simple vertx service. Can be used as sandbox for a testing tools investigations.</h2>
 
 To run the server use:
     Start your redis db.
