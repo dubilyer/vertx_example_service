@@ -6,15 +6,15 @@ To run the server use:
     Start your redis db.
     To do it with the help of docker image, you can run "redis_start.sh"
     
-    <b>mvn clean install exec:java</b>
+    <h4>mvn clean install exec:java</h4>
     
     If you want to use a custom redis port,  you can provide it via system property:
     
-    <b>mvn clean install exec:java -DredisPort={your port}<b>
+    <h4>mvn clean install exec:java -DredisPort={your port}<h4>
     
 To run tests you can use:
 
-    <b>mvn test</b>
+    <h4>mvn test</h4>
 
     You don't need redis for it. Tests raise on own container wen needed.
 
