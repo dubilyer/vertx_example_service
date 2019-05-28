@@ -3,8 +3,8 @@ package model;
 import java.util.Objects;
 
 public class User {
-    int id;
-    String name;
+    private int id;
+    private String name;
 
     public User(int id, String name) {
         this.id = id;
@@ -28,10 +28,7 @@ public class User {
         return Objects.hash(getId());
     }
 
-    public String getName() {
-        return this.name;
-    }
-
+    @SuppressWarnings("unused") //We need it for serialization
     public User() {
     }
 

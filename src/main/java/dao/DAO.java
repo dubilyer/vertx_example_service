@@ -2,12 +2,11 @@ package dao;
 
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
-import io.vertx.redis.RedisClient;
 import model.User;
 
 public interface DAO {
 
-    RedisClient getUserById(String id, Handler<AsyncResult<String>> handler);
-    RedisClient addUser(User user, Handler<AsyncResult<Long>> handler);
-    RedisClient deleteUser(String id, Handler<AsyncResult<Long>> handler);
+    void getUserById(String id, Handler<AsyncResult<String>> handler);
+    void addUser(User user, Handler<AsyncResult<Long>> handler);
+    void deleteUser(String id, Handler<AsyncResult<Long>> handler);
 }

@@ -8,15 +8,12 @@ import io.vertx.core.eventbus.Message;
 import io.vertx.core.json.Json;
 import model.User;
 
-public class UserServ {
-    Vertx vertx;
-    UserRedisRepository repo;
+public class UserService {
+    private UserRedisRepository repo;
 
-    public UserServ(Vertx vertx) {
-        this.vertx = vertx;
+    public UserService(Vertx vertx) {
         repo = new UserRedisRepository(vertx);
     }
-
 
     public void deleteUser(Message message, Handler<AsyncResult<Long>> future) {
         String id = message.body().toString().split("#")[1];

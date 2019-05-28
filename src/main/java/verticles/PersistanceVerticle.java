@@ -4,14 +4,14 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.eventbus.Message;
-import service.UserServ;
+import service.UserService;
 
 public class PersistanceVerticle extends AbstractVerticle {
-   private UserServ service;
+   private UserService service;
 
     @Override
     public void start() {
-        service = new UserServ(vertx);
+        service = new UserService(vertx);
         final EventBus eventBus = vertx.eventBus();
         eventBus.consumer("DB", receivedMessage -> {
             System.out.println("Received: " + receivedMessage.body());
@@ -31,7 +31,7 @@ public class PersistanceVerticle extends AbstractVerticle {
         });
     }
 
-    <T> void handle(AsyncResult<T> future, Message message){
+    private <T> void handle(AsyncResult<T> future, Message message){
         System.out.println(future.succeeded());
         if (future.succeeded()) {
             message.reply(future.result());
