@@ -19,6 +19,7 @@ To run tests you can use:
     You don't need redis for it. Tests raise on own container wen needed.
 
 <h2>Exposed endpoints:</h2>
+    
     1. GET http://{your host}/user/{id}
     
     2. DELETE http://{your host}/user/{id}
