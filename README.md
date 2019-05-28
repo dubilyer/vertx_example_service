@@ -20,6 +20,8 @@ To run tests you can use:
 
 <h2>Exposed endpoints:</h2>
     1. GET http://{your host}/user/{id}
+    
     2. DELETE http://{your host}/user/{id}
+    
     3. POST http://{your host}/user + body {"id":"{id}", "name":"{name}"}
         
