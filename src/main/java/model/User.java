@@ -11,6 +11,11 @@ public class User {
         this.name = name;
     }
 
+    @SuppressWarnings("unused") //We need it for serialization
+    public String getName() {
+        return name;
+    }
+
     public int getId() {
         return id;
     }
